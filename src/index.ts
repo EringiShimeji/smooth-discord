@@ -73,8 +73,11 @@ const main = () => {
         },
       );
 
+      spinner.succeed();
+
       // ダウンロード中と表示
       spinner.text = 'Downloading packages...';
+      spinner.start();
 
       // npm install
       // yarn add
