@@ -6,6 +6,7 @@ import child_process from 'child_process';
 import packagesList from './packagesList';
 import ora from 'ora';
 import { promisify } from 'util';
+import { duplicateTemplate } from './template';
 const exec = promisify(child_process.exec);
 
 const main = () => {
@@ -56,91 +57,68 @@ const main = () => {
         `${currentPath}/${projectName === currentDirName ? '' : projectName}`,
       );
 
-      // package.json
-      writeFileSync(
-        `${projectPath}/package.json`,
-        `{
-  "name": "${projectName}",
-  "version": "0.1.0",
-  "description": "${description}",
-  "main": "dist/app.js",
-  "license": "MIT"
-}`,
+      // ファイルを生成中と表示
+      const spinner = ora('Generating files...').start();
+
+      // ファイルを複製
+      await duplicateTemplate(
+        `${projectPath}`,
+        isUsingTS ? 'typescript' : 'javascript',
+        {
+          'package.json': {
+            name: projectName,
+            description,
+            mainDirectory: isUsingTS ? 'dist' : 'src',
+          },
+        },
       );
 
-      // tsconfig.json
-      if (isUsingTS) {
-        writeFileSync(
-          `${projectPath}/tsconfig.json`,
-          `{
-  "compilerOptions": {
-    "module": "commonjs",
-    "removeComments": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "target": "es2020",
-    "sourceMap": false,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "incremental": true,
-    "skipLibCheck": true,
-    "strictNullChecks": true,
-    "esModuleInterop": true
-  },
-  "include": [
-    "src/**/*"
-  ],
-}`,
+      // ダウンロード中と表示
+      spinner.text = 'Downloading packages...';
+
+      // npm install
+      // yarn add
+      const savePackages = packagesList
+        .filter((module) => !module.saveDev)
+        .filter((module) => {
+          if (module.onlyTS) {
+            if (isUsingTS) return true;
+            return false;
+          }
+          return true;
+        })
+        .map((module) => module.name)
+        .join(' ');
+      if (savePackages) {
+        await exec(
+          `${packageManager} ${
+            packageManager === 'npm' ? 'install' : 'add'
+          } ${savePackages}`,
         );
-
-        // ダウンロード中と表示
-        const spinner = ora('Downloading packages...').start();
-
-        // npm install
-        // yarn add
-        const savePackages = packagesList
-          .filter((module) => !module.saveDev)
-          .filter((module) => {
-            if (module.onlyTS) {
-              if (isUsingTS) return true;
-              return false;
-            }
-            return true;
-          })
-          .map((module) => module.name)
-          .join(' ');
-        if (savePackages) {
-          await exec(
-            `${packageManager} ${
-              packageManager === 'npm' ? 'install' : 'add'
-            } ${savePackages}`,
-          );
-        }
-
-        // npm install -D
-        // yarn add -D
-        const saveDevPackages = packagesList
-          .filter((module) => module.saveDev)
-          .filter((module) => {
-            if (module.onlyTS) {
-              if (isUsingTS) return true;
-              return false;
-            }
-            return true;
-          })
-          .map((module) => module.name)
-          .join(' ');
-        if (saveDevPackages) {
-          await exec(
-            `${packageManager} ${
-              packageManager === 'npm' ? 'install' : 'add'
-            } -D ${saveDevPackages}`,
-          );
-        }
-
-        spinner.succeed();
       }
+
+      // npm install -D
+      // yarn add -D
+      const saveDevPackages = packagesList
+        .filter((module) => module.saveDev)
+        .filter((module) => {
+          if (module.onlyTS) {
+            if (isUsingTS) return true;
+            return false;
+          }
+          return true;
+        })
+        .map((module) => module.name)
+        .join(' ');
+      if (saveDevPackages) {
+        await exec(
+          `${packageManager} ${
+            packageManager === 'npm' ? 'install' : 'add'
+          } -D ${saveDevPackages}`,
+        );
+      }
+
+      spinner.succeed();
     });
 
   program.parse(process.argv);
