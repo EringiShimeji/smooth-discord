@@ -31,5 +31,8 @@
     "eslint-plugin-prettier": "^3.4.1",
     "prettier": "^2.3.2",
     "typesync": "^0.8.0"
+  },
+  "bin": {
+    "sdjs": "bin/sdjs.js"
   }
 }

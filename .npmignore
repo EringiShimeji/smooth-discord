@@ -2,5 +2,6 @@
 .eslintrc.js
 .gitignore
 .prettierrc
-.tsconfig.eslint.json
-.tsconfig.json
+tsconfig.eslint.json
+tsconfig.json
+tsconfig.tsbuildinfo
