@@ -1,5 +1,5 @@
 import { MessageButton } from 'discord.js';
-import { BaseButton } from 'easy-discord';
+import { BaseButton } from 'smooth-discord';
 
 const exampleButton = new BaseButton({
   component: new MessageButton()

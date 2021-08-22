@@ -1,11 +1,12 @@
 {
-  "name": "easy_discord",
+  "name": "smooth-discord",
   "version": "0.1.0",
   "description": "",
   "main": "dist/app.js",
   "scripts": {
     "preinstall": "typesync || :",
-    "push": "git add . & git commit & git push origin main"
+    "push": "git add . & git commit & git push origin main",
+    "prepack": "tsc"
   },
   "license": "MIT",
   "dependencies": {

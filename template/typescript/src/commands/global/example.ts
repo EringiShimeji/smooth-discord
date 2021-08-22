@@ -1,4 +1,4 @@
-import { BaseCommand } from 'easy-discord';
+import { BaseCommand } from 'smooth-discord';
 
 const exampleGlobalCommand = new BaseCommand({
   name: 'exampleGlobal',

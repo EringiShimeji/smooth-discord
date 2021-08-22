@@ -1,4 +1,4 @@
-import { BaseCommand } from 'easy-discord';
+import { BaseCommand } from 'smooth-discord';
 
 const exampleGuildCommand = new BaseCommand({
   name: 'exampleGuild',

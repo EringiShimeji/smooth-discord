@@ -5,7 +5,7 @@ import {
   getGlobalCommands,
   getGuildCommands,
   registerGlobalCommands,
-} from 'easy-discord';
+} from 'smooth-discord';
 
 const commands = { guild: [], global: [] };
 let buttons = [];
