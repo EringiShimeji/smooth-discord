@@ -1,10 +1,11 @@
 import { Client, Intents } from 'discord.js';
 import { registerGuildCommands } from '../../javascript/src/commands';
 import {
+  getButtons,
   getGlobalCommands,
   getGuildCommands,
   registerGlobalCommands,
-} from './commands';
+} from 'easy-discord';
 
 const commands = { guild: [], global: [] };
 let buttons = [];
@@ -19,6 +20,8 @@ client.once('ready', async () => {
 
   await registerGuildCommands(commands.guild);
   await registerGlobalCommands(client, commands.global);
+
+  buttons = await getButtons();
 
   console.log('bot is ready...');
 });

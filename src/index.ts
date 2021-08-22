@@ -22,11 +22,13 @@ const main = () => {
         description,
         packageManager,
         isUsingTS,
+        token,
       }: {
         projectName: string;
         description: string;
         packageManager: 'npm' | 'yarn';
         isUsingTS: boolean;
+        token: string;
       } = await prompt([
         {
           name: 'projectName',
@@ -51,6 +53,12 @@ const main = () => {
           message: 'Do you want to use TypeScript?',
           default: false,
         },
+        {
+          name: 'token',
+          type: 'input',
+          message: 'Enter your bot token',
+          default: `/* Your bot token here */`,
+        },
       ]);
 
       const projectPath = await makeDir(
@@ -69,6 +77,9 @@ const main = () => {
             name: projectName,
             description,
             mainDirectory: isUsingTS ? 'dist' : 'src',
+          },
+          'src/app.ts': {
+            token,
           },
         },
       );
