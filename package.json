@@ -4,7 +4,6 @@
   "description": "",
   "main": "dist/app.js",
   "scripts": {
-    "preinstall": "typesync || :",
     "push": "git add . & git commit & git push origin main",
     "prepack": "tsc"
   },
