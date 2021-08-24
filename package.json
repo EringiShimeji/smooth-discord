@@ -2,7 +2,7 @@
   "name": "smooth-discord",
   "version": "1.0.9",
   "description": "",
-  "main": "dist/app.js",
+  "main": "dist/index.js",
   "scripts": {
     "push": "git add . & git commit & git push origin main",
     "prepack": "tsc"
