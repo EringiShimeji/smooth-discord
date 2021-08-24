@@ -7,6 +7,11 @@ import packagesList from './packagesList';
 import ora from 'ora';
 import { promisify } from 'util';
 import { duplicateTemplate } from './template';
+import { getGlobalCommands, getGuildCommands } from './commands';
+import { getButtons } from './buttons';
+
+export { getGlobalCommands, getGuildCommands, getButtons };
+
 const exec = promisify(child_process.exec);
 
 const main = () => {
