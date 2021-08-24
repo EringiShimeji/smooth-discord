@@ -36,6 +36,8 @@
     "sdjs": "bin/sdjs.js"
   },
   "files": [
-    "dist"
+    "bin",
+    "dist",
+    "template"
   ]
 }
