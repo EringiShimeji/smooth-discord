@@ -1,16 +1,30 @@
-import { Command } from 'commander';
-import { writeFileSync } from 'fs';
-import makeDir from 'make-dir';
-import { prompt } from 'inquirer';
 import child_process from 'child_process';
-import packagesList from './packagesList';
-import ora from 'ora';
 import { promisify } from 'util';
-import { duplicateTemplate } from './template';
-import { getGlobalCommands, getGuildCommands } from './commands';
+import { Command } from 'commander';
+import { prompt } from 'inquirer';
+import makeDir from 'make-dir';
+import ora from 'ora';
 import { getButtons } from './buttons';
+import {
+  getGlobalCommands,
+  getGuildCommands,
+  registerGlobalCommands,
+  registerGuildCommands,
+} from './commands';
+import packagesList from './packagesList';
+import { duplicateTemplate } from './template';
+import { BaseButton } from './types/BaseButton';
+import { BaseCommand } from './types/BaseCommand';
 
-export { getGlobalCommands, getGuildCommands, getButtons };
+export {
+  getGlobalCommands,
+  getGuildCommands,
+  getButtons,
+  registerGlobalCommands,
+  registerGuildCommands,
+  BaseButton,
+  BaseCommand,
+};
 
 const exec = promisify(child_process.exec);
 
@@ -38,13 +52,13 @@ const main = () => {
         {
           name: 'projectName',
           type: 'input',
-          message: `Enter your project name`,
+          message: 'Enter your project name',
           default: currentDirName,
         },
         {
           name: 'description',
           type: 'input',
-          message: `Enter your project description`,
+          message: 'Enter your project description',
         },
         {
           name: 'packageManager',
@@ -62,7 +76,7 @@ const main = () => {
           name: 'token',
           type: 'input',
           message: 'Enter your bot token',
-          default: `/* Your bot token here */`,
+          default: '/* Your bot token here */',
         },
       ]);
 

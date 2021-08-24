@@ -1,8 +1,4 @@
-import {
-  ButtonInteraction,
-  MessageButton,
-  MessageButtonOptions,
-} from 'discord.js';
+import { ButtonInteraction, MessageButton } from 'discord.js';
 
 interface IBaseButton {
   component: MessageButton;
@@ -11,6 +7,7 @@ interface IBaseButton {
 
 export class BaseButton implements IBaseButton {
   component: MessageButton;
+
   execute: (interaction: ButtonInteraction) => void;
 
   constructor(params: IBaseButton) {
