@@ -6,6 +6,9 @@ const packagesList: { name: string; saveDev?: boolean; onlyTS?: boolean }[] = [
     name: 'app-root-path',
   },
   {
+    name: 'smooth-discord',
+  },
+  {
     name: 'typescript',
     saveDev: true,
     onlyTS: true,
