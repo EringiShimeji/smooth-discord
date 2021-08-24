@@ -36,6 +36,6 @@
     "sdjs": "bin/sdjs.js"
   },
   "files": [
-    "src"
+    "dist"
   ]
 }
