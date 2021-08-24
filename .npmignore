@@ -2,6 +2,7 @@
 .eslintrc.js
 .gitignore
 .prettierrc
+package-lock.json
 tsconfig.eslint.json
 tsconfig.json
 tsconfig.tsbuildinfo

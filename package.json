@@ -34,5 +34,8 @@
   },
   "bin": {
     "sdjs": "bin/sdjs.js"
-  }
+  },
+  "files": [
+    "src"
+  ]
 }
