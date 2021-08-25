@@ -28,7 +28,7 @@ export {
 
 const exec = promisify(child_process.exec);
 
-const main = () => {
+const main = async () => {
   const program = new Command();
   program
     .command('init')

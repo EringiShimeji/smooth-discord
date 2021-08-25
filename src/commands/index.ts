@@ -1,6 +1,6 @@
+import { readdir } from 'fs/promises';
 import root from 'app-root-path';
 import { Client } from 'discord.js';
-import { readdir } from 'fs/promises';
 import { BaseCommand } from '../types/BaseCommand';
 
 export const getGuildCommands = async (): Promise<BaseCommand[]> => {
@@ -51,9 +51,11 @@ export const registerGuildCommands = async (
 
   if (slashCommands.length) {
     client.guilds.fetch();
-    for (const guild of client.guilds.cache.map((guild) => guild)) {
-      await guild.commands.set(commands);
-    }
+    client.guilds.cache
+      .map((guild) => guild)
+      .map(async (guild) => {
+        await guild.commands.set(commands);
+      });
   }
 };
 
