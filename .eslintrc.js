@@ -1,4 +1,5 @@
 module.exports = {
+  root: true,
   env: {
     es2021: true,
     node: true,
@@ -8,13 +9,19 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 12,
     sourceType: 'module',
+    project: ['./tsconfig.eslint.json'],
   },
   plugins: ['@typescript-eslint'],
   rules: {
     camelcase: 0,
     'import/prefer-default-export': 0,
-    'import/extensions': ['never'],
+    'import/extensions': 0,
     'sort-imports': 0,
     'import/order': [2, { alphabetize: { order: 'asc' } }],
+  },
+  settings: {
+    'import/resolver': {
+      node: { extensions: ['.ts'] },
+    },
   },
 };

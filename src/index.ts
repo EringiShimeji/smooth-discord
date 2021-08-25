@@ -12,7 +12,7 @@ import {
   registerGuildCommands,
 } from './commands';
 import packagesList from './packagesList';
-import { duplicateTemplate } from './template';
+import { duplicateTemplate, getTemplates } from './template';
 import { BaseButton } from './types/BaseButton';
 import { BaseCommand } from './types/BaseCommand';
 
@@ -41,13 +41,15 @@ const main = () => {
         description,
         packageManager,
         isUsingTS,
-        token,
+        botToken,
+        templateName,
       }: {
         projectName: string;
         description: string;
         packageManager: 'npm' | 'yarn';
         isUsingTS: boolean;
-        token: string;
+        botToken: string;
+        templateName: string;
       } = await prompt([
         {
           name: 'projectName',
@@ -73,10 +75,16 @@ const main = () => {
           default: false,
         },
         {
-          name: 'token',
+          name: 'botToken',
           type: 'input',
           message: 'Enter your bot token',
           default: '/* Your bot token here */',
+        },
+        {
+          name: 'templateName',
+          type: 'list',
+          message: 'Choose your favorite template',
+          choices: await getTemplates(),
         },
       ]);
 
@@ -85,23 +93,15 @@ const main = () => {
       );
 
       // ファイルを生成中と表示
-      const spinner = ora('Generating files...').start();
+      const spinner = ora('Downloading template...').start();
 
       // ファイルを複製
-      await duplicateTemplate(
-        `${projectPath}`,
-        isUsingTS ? 'typescript' : 'javascript',
-        {
-          'package.json': {
-            name: projectName,
-            description,
-            mainDirectory: isUsingTS ? 'dist' : 'src',
-          },
-          'src/app.ts': {
-            token,
-          },
-        },
-      );
+      await duplicateTemplate(templateName, {
+        path: projectPath,
+        name: projectName,
+        description,
+        botToken,
+      });
 
       spinner.succeed();
 
