@@ -1,17 +1,13 @@
-import {
-  ButtonInteraction,
-  MessageButton,
-  MessageSelectMenu,
-} from 'discord.js';
+import { MessageSelectMenu, SelectMenuInteraction } from 'discord.js';
 
 interface IBaseSelectMenu {
   component: MessageSelectMenu;
-  execute: (interaction: ButtonInteraction) => void;
+  execute: (interaction: SelectMenuInteraction) => void;
 }
 
 export class BaseSelectMenu implements IBaseSelectMenu {
   constructor(
     public component: MessageSelectMenu,
-    public execute: (interaction: ButtonInteraction) => void,
+    public execute: (interaction: SelectMenuInteraction) => void,
   ) {}
 }
