@@ -11,7 +11,6 @@ import {
   registerGlobalCommands,
   registerGuildCommands,
 } from './commands';
-import packagesList from './packagesList';
 import { duplicateTemplate, getTemplates } from './template';
 import { BaseButton } from './types/BaseButton';
 import { BaseCommand } from './types/BaseCommand';
@@ -40,14 +39,12 @@ const main = async () => {
         projectName,
         description,
         packageManager,
-        isUsingTS,
         botToken,
         templateName,
       }: {
         projectName: string;
         description: string;
         packageManager: 'npm' | 'yarn';
-        isUsingTS: boolean;
         botToken: string;
         templateName: string;
       } = await prompt([
@@ -67,12 +64,6 @@ const main = async () => {
           type: 'list',
           message: 'Choose your package manager',
           choices: ['npm', 'yarn'],
-        },
-        {
-          name: 'isUsingTS',
-          type: 'confirm',
-          message: 'Do you want to use TypeScript?',
-          default: false,
         },
         {
           name: 'botToken',
@@ -111,45 +102,10 @@ const main = async () => {
 
       // npm install
       // yarn add
-      const savePackages = packagesList
-        .filter((module) => !module.saveDev)
-        .filter((module) => {
-          if (module.onlyTS) {
-            if (isUsingTS) return true;
-            return false;
-          }
-          return true;
-        })
-        .map((module) => module.name)
-        .join(' ');
-      if (savePackages) {
-        await exec(
-          `${packageManager} ${
-            packageManager === 'npm' ? 'install' : 'add'
-          } ${savePackages}`,
-        );
-      }
 
-      // npm install -D
-      // yarn add -D
-      const saveDevPackages = packagesList
-        .filter((module) => module.saveDev)
-        .filter((module) => {
-          if (module.onlyTS) {
-            if (isUsingTS) return true;
-            return false;
-          }
-          return true;
-        })
-        .map((module) => module.name)
-        .join(' ');
-      if (saveDevPackages) {
-        await exec(
-          `${packageManager} ${
-            packageManager === 'npm' ? 'install' : 'add'
-          } -D ${saveDevPackages}`,
-        );
-      }
+      await exec(
+        `${packageManager} ${packageManager === 'npm' ? 'install' : ''}`,
+      );
 
       spinner.succeed();
     });
