@@ -54,6 +54,7 @@ export const registerGuildCommands = async (
     client.guilds.cache
       .map((guild) => guild)
       .map(async (guild) => {
+        console.log(guild.id);
         await guild.commands.set(commands);
       });
   }
