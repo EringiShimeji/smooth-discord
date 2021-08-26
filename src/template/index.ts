@@ -30,7 +30,9 @@ export const duplicateTemplate = async (
 
     // package.jsonを編集
     await exec(
-      `npm pkg set name=${project.name} description=${project.description}`,
+      `npm pkg set name=${project.name} ${
+        project.description ? `description=${project.description}` : ''
+      }`,
     );
   } catch (error) {
     throw error;

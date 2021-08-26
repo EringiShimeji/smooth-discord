@@ -10,7 +10,7 @@ export const downloadRepositoryFromGithub = async (
     `https://codeload.github.com/${owner}/${repository}/zip/${branch}`,
   );
   if (response.status === 200 || response.status === 0) {
-    return Object.values((await loadAsync(await response.buffer())).files);
+    return (await loadAsync(await response.buffer())).files;
   } else if ((response.status = 404)) {
     throw new Error('Template not found');
   } else {

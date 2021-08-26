@@ -3,19 +3,24 @@ import { JSZipObject } from 'jszip';
 import makeDir from 'make-dir';
 
 export const generateFiles = async (
-  rawFiles: JSZipObject[],
+  files: {
+    [key: string]: JSZipObject;
+  },
   projectPath: string,
-  variables?: { [key: string]: { [key: string]: string } },
 ) => {
-  const files = rawFiles.map((file) => ({
-    ...file,
-    name: file.name.split('/').slice(1).join('/'),
-  }));
-
-  for (const file of files.filter((file) => file.dir)) {
-    makeDir(`${projectPath}/${file.name}`);
+  for (const key in files) {
+    const file = files[key];
+    if (file.dir) {
+      makeDir(file.name.split('/').slice(1).join('/'));
+    }
   }
-  for (const file of files.filter((file) => !file.dir)) {
-    await writeFile(`${projectPath}/${file.name}`, await file.async('string'));
+  for (const key in files) {
+    const file = files[key];
+    if (!file.dir) {
+      await writeFile(
+        `${projectPath}/${file.name.split('/').slice(1).join('/')}`,
+        await file.async('string'),
+      );
+    }
   }
 };
