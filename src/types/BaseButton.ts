@@ -6,15 +6,8 @@ interface IBaseButton {
 }
 
 export class BaseButton implements IBaseButton {
-  component: MessageButton;
-
-  execute: (interaction: ButtonInteraction) => void;
-
-  constructor(params: IBaseButton) {
-    for (const key in params) {
-      if (Object.prototype.hasOwnProperty.call(params, key)) {
-        this[key] = params[key];
-      }
-    }
-  }
+  constructor(
+    public component: MessageButton,
+    public execute: (interaction: ButtonInteraction) => void,
+  ) {}
 }

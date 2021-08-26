@@ -20,6 +20,9 @@ module.exports = {
     'import/order': [2, { alphabetize: { order: 'asc' } }],
     'no-restricted-syntax': 0,
     'no-unused-vars': 0,
+    'no-useless-constructor': 0,
+    'no-empty-function': 0,
+    indent: 0,
   },
   settings: {
     'import/resolver': {

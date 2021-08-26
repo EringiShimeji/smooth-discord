@@ -1,11 +1,10 @@
 import { readdir } from 'fs/promises';
-import root from 'app-root-path';
 import { Client } from 'discord.js';
 import { BaseCommand } from '../types/BaseCommand';
 
-export const getGuildCommands = async (): Promise<BaseCommand[]> => {
-  const path = `${root}/dist/commands/guild`;
-
+export const getGuildCommands = async (
+  path: string,
+): Promise<BaseCommand[]> => {
   try {
     return await Promise.all(
       (
@@ -23,9 +22,9 @@ export const getGuildCommands = async (): Promise<BaseCommand[]> => {
   }
 };
 
-export const getGlobalCommands = async (): Promise<BaseCommand[]> => {
-  const path = `${root}/dist/commands/global`;
-
+export const getGlobalCommands = async (
+  path: string,
+): Promise<BaseCommand[]> => {
   try {
     return await Promise.all(
       (

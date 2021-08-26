@@ -11,18 +11,22 @@ import {
   registerGlobalCommands,
   registerGuildCommands,
 } from './commands';
+import { getSelectMenus } from './selectMenus';
 import { duplicateTemplate, getTemplates } from './template';
 import { BaseButton } from './types/BaseButton';
 import { BaseCommand } from './types/BaseCommand';
+import { BaseSelectMenu } from './types/BaseSelectMenus';
 
 export {
+  getButtons,
   getGlobalCommands,
   getGuildCommands,
-  getButtons,
   registerGlobalCommands,
   registerGuildCommands,
+  getSelectMenus,
   BaseButton,
   BaseCommand,
+  BaseSelectMenu,
 };
 
 const exec = promisify(child_process.exec);

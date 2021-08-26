@@ -2,9 +2,7 @@ import { readdir } from 'fs/promises';
 import root from 'app-root-path';
 import { BaseButton } from '../types/BaseButton';
 
-export const getButtons = async (): Promise<BaseButton[]> => {
-  const path = `${root}/dist/buttons/`;
-
+export const getButtons = async (path: string): Promise<BaseButton[]> => {
   try {
     return await Promise.all(
       (
