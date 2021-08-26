@@ -11,16 +11,29 @@ interface IBaseCommand {
   options?: ApplicationCommandOptionData[];
   defaultPermission?: boolean;
   execute: (interaction: CommandInteraction) => void;
-  isSlashCommand?: boolean;
 }
 
 export class BaseCommand implements IBaseCommand {
+  type?: ApplicationCommandType;
+
+  options?: ApplicationCommandOptionData[];
+
+  defaultPermission?: boolean;
+
   constructor(
     public name: string,
     public description: string,
-    public type: ApplicationCommandType,
     public execute: (interaction: CommandInteraction) => void,
-    public options?: ApplicationCommandOptionData[],
-    public defaultPermission?: boolean,
-  ) {}
+    options: {
+      type?: ApplicationCommandType;
+      options?: ApplicationCommandOptionData[];
+      defaultPermission?: boolean;
+    },
+  ) {
+    for (const key in options) {
+      if (Object.prototype.hasOwnProperty.call(options, key)) {
+        this[key] = options[key];
+      }
+    }
+  }
 }
