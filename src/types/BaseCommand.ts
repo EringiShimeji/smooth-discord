@@ -24,7 +24,7 @@ export class BaseCommand implements IBaseCommand {
     public name: string,
     public description: string,
     public execute: (interaction: CommandInteraction) => void,
-    options: {
+    options?: {
       type?: ApplicationCommandType;
       options?: ApplicationCommandOptionData[];
       defaultPermission?: boolean;
