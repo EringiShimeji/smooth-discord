@@ -51,6 +51,7 @@ export const registerGuildCommands = async (
 
   if (slashCommands.length) {
     client.guilds.fetch();
+    console.log(client.guilds.cache);
     client.guilds.cache
       .map((guild) => guild)
       .map(async (guild) => {
