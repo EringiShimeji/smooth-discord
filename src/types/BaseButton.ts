@@ -12,7 +12,9 @@ export class BaseButton implements IBaseButton {
 
   constructor(params: IBaseButton) {
     for (const key in params) {
-      this[key] = params[key];
+      if (Object.prototype.hasOwnProperty.call(params, key)) {
+        this[key] = params[key];
+      }
     }
   }
 }

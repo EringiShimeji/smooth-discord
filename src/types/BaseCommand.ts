@@ -16,16 +16,22 @@ interface IBaseCommand {
 
 export class BaseCommand implements IBaseCommand {
   name: string;
+
   description: string;
+
   type: ApplicationCommandType;
+
   options?: ApplicationCommandOptionData[];
+
   defaultPermission?: boolean;
+
   execute: (interaction: CommandInteraction) => void;
-  isSlashCommand?: boolean;
 
   constructor(params: IBaseCommand) {
     for (const key in params) {
-      this[key] = params[key];
+      if (Object.prototype.hasOwnProperty.call(params, key)) {
+        this[key] = params[key];
+      }
     }
   }
 }

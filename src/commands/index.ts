@@ -47,27 +47,17 @@ export const registerGuildCommands = async (
   client: Client,
   commands: BaseCommand[],
 ) => {
-  const slashCommands = commands.filter((command) => command.isSlashCommand);
-
-  if (slashCommands.length) {
-    client.guilds.fetch();
-    console.log(client.guilds.cache);
-    client.guilds.cache
-      .map((guild) => guild)
-      .map(async (guild) => {
-        console.log(guild.id);
-        await guild.commands.set(commands);
-      });
-  }
+  client.guilds.fetch();
+  client.guilds.cache
+    .map((guild) => guild)
+    .map(async (guild) => {
+      await guild.commands.set(commands);
+    });
 };
 
 export const registerGlobalCommands = async (
   client: Client,
   commands: BaseCommand[],
 ) => {
-  const slashCommands = commands.filter((command) => command.isSlashCommand);
-
-  if (slashCommands.length) {
-    await client.application?.commands.set(commands);
-  }
+  await client.application?.commands.set(commands);
 };

@@ -18,6 +18,8 @@ module.exports = {
     'import/extensions': 0,
     'sort-imports': 0,
     'import/order': [2, { alphabetize: { order: 'asc' } }],
+    'no-restricted-syntax': 0,
+    'no-unused-vars': 0,
   },
   settings: {
     'import/resolver': {
